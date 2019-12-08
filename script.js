@@ -1,5 +1,5 @@
 const Gameboard = () => {
-  const board = ["","","","","","","","",""];
+  const board = ["X","X","X","O","O","O","X","X","X"];
 
   return { board }
 };
