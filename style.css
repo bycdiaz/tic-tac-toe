@@ -1,0 +1,21 @@
+/* board layout start */
+.board {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  width: 50%;
+  margin: auto;
+}
+
+.board-cell {
+  width: 30%;
+  text-align: center;
+  margin: 15px 0px;
+}
+
+/*  */
+
+.header {
+  margin: 10%;
+  text-align: center;
+}

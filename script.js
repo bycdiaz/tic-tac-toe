@@ -20,4 +20,6 @@ const Game = (Gameboard,player) => {
 const newGame = Game(Gameboard(),"Carlos");
 
 console.log(newGame.player);
-console.log(newGame.Gameboard.board);
+newGame.Gameboard.board.forEach( (element,index) => {
+  console.log(`${element} at index ${index}`);
+});
