@@ -8,7 +8,6 @@ const Gameboard = () => {
     for (let i = 0; i < board.length; i++) {
       const boardCell = document.createElement('p');
       boardCell.className = 'board-cell';
-      // boardCell.innerText = `${board[i]}`;
       boardContainer.appendChild(boardCell)
     }
   }
