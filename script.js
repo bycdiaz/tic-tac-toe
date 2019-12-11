@@ -1,7 +1,19 @@
 const Gameboard = () => {
   const board = ["X","X","X","O","O","O","X","X","X"];
 
-  return { board }
+  const create = (board) => {
+
+    const boardContainer = document.querySelector(".board")
+    for (let i = 0; i < board.length; i++) {
+      const boardCell = document.createElement('p');
+      boardCell.className = 'board-cell';
+      boardCell.id = `${i}`;
+      boardCell.innerText = `${board[i]}`;
+      boardContainer.appendChild(boardCell)
+    }
+  }
+
+  return { board, create }
 };
 
 const player = (name) => {
@@ -11,15 +23,11 @@ const player = (name) => {
 const Game = (Gameboard,player) => {
   
   Gameboard
-
+  Gameboard.create(Gameboard.board);
+  
   player
 
   return { Gameboard, player }
 };
 
 const newGame = Game(Gameboard(),"Carlos");
-
-console.log(newGame.player);
-newGame.Gameboard.board.forEach( (element,index) => {
-  console.log(`${element} at index ${index}`);
-});
