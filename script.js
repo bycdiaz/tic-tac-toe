@@ -27,22 +27,28 @@ const Gameboard = () => {
 
   return {board,boardContainer,create,update}
 };
+let count = 0;
+const player = () => {
 
-const player = (name) => {
+  const symbols = ['X','O']
 
-  const selection = () => {
+  const symbol = symbols[count];
 
-  }
-  return {name,selection}
+  return count++,{name,symbols,symbol};
 }
 
 const Game = (Gameboard,player) => {
 
+  const player1 = player();
+  const player2 = player();
+  console.log(player1.symbol);
+  console.log(player2.symbol);
+  
   Gameboard.create(Gameboard.boardContainer,Gameboard.board);
   Gameboard.update(Gameboard.boardContainer,Gameboard.board);
-  player
+  
 
   return {Gameboard,player}
 };
 
-const newGame = Game(Gameboard(),"Carlos");
+const newGame = Game(Gameboard(),player);
