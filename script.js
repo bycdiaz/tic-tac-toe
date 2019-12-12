@@ -2,17 +2,21 @@ const Gameboard = () => {
   const board = ["X","X","X","O","O","O","X","X","X"];
   const boardContainer = document.querySelector(".board");
 
-  const create = (boardContainer, board) => {
+  const create = (boardContainer,board) => {
 
     
     for (let i = 0; i < board.length; i++) {
       const boardCell = document.createElement('p');
       boardCell.className = 'board-cell';
+      boardCell.id = `cell ${i}`
+      boardCell.addEventListener('click', () => {
+        // console.log(boardCell.id);
+      });
       boardContainer.appendChild(boardCell)
     }
   }
 
-  const update = (boardContainer, board) => {
+  const update = (boardContainer,board) => {
     
     const cells = boardContainer.children;
 
@@ -21,11 +25,15 @@ const Gameboard = () => {
     }
   }
 
-  return { board, boardContainer, create, update }
+  return {board,boardContainer,create,update}
 };
 
 const player = (name) => {
-  return {name}
+
+  const selection = () => {
+
+  }
+  return {name,selection}
 }
 
 const Game = (Gameboard,player) => {
@@ -34,7 +42,7 @@ const Game = (Gameboard,player) => {
   Gameboard.update(Gameboard.boardContainer,Gameboard.board);
   player
 
-  return { Gameboard, player }
+  return {Gameboard,player}
 };
 
 const newGame = Game(Gameboard(),"Carlos");
