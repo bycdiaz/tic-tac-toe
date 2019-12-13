@@ -8,9 +8,11 @@ const Gameboard = () => {
     for (let i = 0; i < board.length; i++) {
       const boardCell = document.createElement('p');
       boardCell.className = 'board-cell';
-      boardCell.id = `cell ${i}`
+      boardCell.id = `${i}`
       boardCell.addEventListener('click', () => {
-        // console.log(boardCell.id);
+        board[`${parseInt(boardCell.id)}`] = "test";
+        console.log(board);
+        update(boardContainer,board);
       });
       boardContainer.appendChild(boardCell)
     }
