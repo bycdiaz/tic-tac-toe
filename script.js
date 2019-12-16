@@ -1,24 +1,26 @@
-const Gameboard = () => {
-  const board = ["X","X","X","O","O","O","X","X","X"];
+const boardContainer = document.querySelector(".board");
+
+const Gameboard = (gameboardContainer) => {
+  const board = ["test","test","test","test","test","test","test","test","test"];
   const boardContainer = document.querySelector(".board");
 
-  const create = (boardContainer,board) => {
+  const create = () => {
 
-    
     for (let i = 0; i < board.length; i++) {
       const boardCell = document.createElement('p');
       boardCell.className = 'board-cell';
-      boardCell.id = `${i}`
-      boardCell.addEventListener('click', () => {
-        board[`${parseInt(boardCell.id)}`] = "test";
-        console.log(board);
-        update(boardContainer,board);
-      });
+      boardCell.dataset.index = i;
       boardContainer.appendChild(boardCell)
     }
+    update();
   }
 
-  const update = (boardContainer,board) => {
+  const placeToken = (target, token) => {
+    board[target] = token;
+    update();
+  };
+
+  const update = () => {
     
     const cells = boardContainer.children;
 
@@ -27,35 +29,34 @@ const Gameboard = () => {
     }
   }
 
-  return {board,boardContainer,create,update}
+  return {board, boardContainer, placeToken, create, update}
 };
 
-const player = (symbol,name) => {
+const player = (symbol) => {
 
   const playerSymbol = symbol;
-  const PlayerName = name;
 
   return {
-    playerSymbol,
-    PlayerName
+    playerSymbol
   };
 }
 
-const Game = (Gameboard,player) => {
-
-  const player1 = player("X","Sofía");
-  const player2 = player("O","Serena")
-
-  console.log(player1.playerSymbol);
-  console.log(player1.PlayerName);
-  console.log(player2.playerSymbol);
-  console.log(player2.PlayerName);
+const Game = (gameboard, player) => {
   
-  Gameboard.create(Gameboard.boardContainer,Gameboard.board);
-  Gameboard.update(Gameboard.boardContainer,Gameboard.board);
-  
+  let roundNumber = 0;
+  const player1 = player("X");
+  const player2 = player("O");
+  let players = [player1, player2]
 
-  return {Gameboard,player}
+  gameboard.create();
+
+  gameboard.boardContainer.addEventListener('click', (event) => {
+    const tokenToPlace = players[roundNumber % 2].playerSymbol;
+    gameboard.placeToken(event.target.dataset.index, tokenToPlace);
+    roundNumber++;
+  });
+
+  return {gameboard, player}
 };
 
-const newGame = Game(Gameboard(),player);
+const newGame = Game(Gameboard(boardContainer), player);
