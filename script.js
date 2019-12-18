@@ -57,19 +57,19 @@ const Game = (gameboard, player) => {
   gameboard.create();
 
   gameboard.boardContainer.addEventListener('click', (event) => {
-    roundNumber++;
+    
     const tokenToPlace = players[roundNumber % 2].playerSymbol;
 
     if (gameboard.board[event.target.dataset.index] === "") {
+      roundNumber++;
       gameboard.placeToken(event.target.dataset.index, tokenToPlace);
       update.innerText = `Player ${(roundNumber % 2) + 1}, make your selection.`
       updateArea.appendChild(update)
     } else {
-      console.log("There is already a selection here.");  
+      update.innerText = `Whoops. Sorry Player ${(roundNumber % 2) + 1}. That slot is taken. Try again.`
+      updateArea.appendChild(update);
     }
     console.log(`Round count is: ${roundNumber}`);
-
-
   });
 
   return {gameboard, player}
