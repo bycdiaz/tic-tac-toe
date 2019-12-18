@@ -42,19 +42,28 @@ const player = (symbol) => {
 }
 
 const Game = (gameboard, player) => {
-  
   let roundNumber = 0;
   const player1 = player("X");
   const player2 = player("O");
   let players = [player1, player2]
 
+  const updateArea = document.querySelector(".update-area")
+  updateArea.innerHTML = "";
+  const update = document.createElement('p');
+  update.innerText = `Player ${(roundNumber % 2) + 1}, make your selection.`
+  updateArea.appendChild(update)
+  
+
   gameboard.create();
 
   gameboard.boardContainer.addEventListener('click', (event) => {
+    roundNumber++;
     const tokenToPlace = players[roundNumber % 2].playerSymbol;
+
     if (gameboard.board[event.target.dataset.index] === "") {
       gameboard.placeToken(event.target.dataset.index, tokenToPlace);
-      roundNumber++;
+      update.innerText = `Player ${(roundNumber % 2) + 1}, make your selection.`
+      updateArea.appendChild(update)
     } else {
       console.log("There is already a selection here.");  
     }
