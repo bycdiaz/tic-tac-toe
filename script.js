@@ -1,86 +1,82 @@
-const boardContainer = document.querySelector(".board");
+const boardContainer = document.querySelector('.board');
 
-const Gameboard = (gameboardContainer) => {
-  const board = ["","","","","","","","",""];
-  const boardContainer = document.querySelector(".board");
+const Gameboard = () => {
+  const board = ['', '', '', '', '', '', '', '', ''];
+
+  const update = () => {
+    const cells = boardContainer.children;
+
+    for (let i = 0; i < board.length; i += 1) {
+      cells[i].innerText = `${board[i]}`;
+    }
+  };
 
   const create = () => {
-
-    for (let i = 0; i < board.length; i++) {
+    for (let i = 0; i < board.length; i += 1) {
       const boardCell = document.createElement('p');
       boardCell.className = 'board-cell';
       boardCell.dataset.index = i;
-      boardContainer.appendChild(boardCell)
+      boardContainer.appendChild(boardCell);
     }
     update();
-  }
+  };
 
   const placeToken = (target, token) => {
     board[target] = token;
     update();
   };
 
-  const update = () => {
-    
-    const cells = boardContainer.children;
-
-    for (let i = 0; i < board.length; i++) {
-      cells[i].innerText = `${board[i]}`;
-    }
-  }
-
-  return {board, boardContainer, placeToken, create, update}
+  return {
+    board, boardContainer, placeToken, create, update,
+  };
 };
 
 const player = (symbol) => {
-
   const playerSymbol = symbol;
 
   return {
-    playerSymbol
+    playerSymbol,
   };
-}
+};
 
-const Game = (gameboard, player) => {
+const Game = (gameboard) => {
   let roundNumber = 0;
-  const player1 = player("X");
-  const player2 = player("O");
-  let players = [player1, player2]
+  const player1 = player('X');
+  const player2 = player('O');
+  const players = [player1, player2];
 
-  const updateArea = document.querySelector(".update-area")
-  updateArea.innerHTML = "";
+  const updateArea = document.querySelector('.update-area');
+  updateArea.innerHTML = '';
   const update = document.createElement('p');
-  update.innerText = `Player ${(roundNumber % 2) + 1}, make your selection.`
-  updateArea.appendChild(update)
-  
+  update.innerText = `Player ${(roundNumber % 2) + 1}, make your selection.`;
+  updateArea.appendChild(update);
 
   gameboard.create();
 
   gameboard.boardContainer.addEventListener('click', (event) => {
-    
     const tokenToPlace = players[roundNumber % 2].playerSymbol;
 
-    if (gameboard.board[event.target.dataset.index] === "") {
-      roundNumber++;
+    if (gameboard.board[event.target.dataset.index] === '') {
+      roundNumber += 1;
       gameboard.placeToken(event.target.dataset.index, tokenToPlace);
-      update.innerText = `Player ${(roundNumber % 2) + 1}, make your selection.`
-      updateArea.appendChild(update)
+      update.innerText = `Player ${(roundNumber % 2) + 1}, make your selection.`;
+      updateArea.appendChild(update);
     } else {
-      update.innerText = `Whoops. Sorry Player ${(roundNumber % 2) + 1}. That slot is taken. Try again.`
+      update.innerText = `Whoops. Sorry Player ${(roundNumber % 2) + 1}. That slot is taken. Try again.`;
       updateArea.appendChild(update);
     }
-    console.log(`Round count is: ${roundNumber}`);
+    // console.log(`Round count is: ${roundNumber}`);
   });
 
-  return {gameboard, player}
+  return { gameboard, player };
 };
 
-const newGame = Game(Gameboard(boardContainer), player);
+const newGame = Game(Gameboard(), player);
 
 // Inside Game
 // let roundNumber = 0;
 // let players = [Player1('X'), Player2('O')];
-// const board = Board(ticTacToeContainer); // To build the board inside of 
+// const board = Board(ticTacToeContainer); // To build the board inside of
 // ticTacToeContainer.addEventListener('click', (event) => {
 //   const tokenToPlace = players[roundNumber % 2].token;
 //   board.placeToken(event.target.value, tokenToPlace);
