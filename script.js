@@ -26,8 +26,21 @@ const Gameboard = () => {
     update();
   };
 
+  const checkWinner = () => {
+    // horizontal win
+    const horizontalSlots = [board.slice(0, 3), board.slice(3, 6), board.slice(6, 9)];
+    const verticalSlots = [[board[0], board[3], board[6]], [board[1], board[4], board[7]], [board[2], board[5], board[8]]];
+    const diagonalSlots = [[board[0], board[4], board[8]], [board[2], board[4], board[6]]];
+    // horizontalSlots.forEach((slice) => {
+    //   const isSymbol = (symbol) => symbol === 'X' || symbol === 'O';
+    //   if (slice.every(isSymbol)) {
+    //     console.log(slice);
+    //   }
+    // });
+  };
+
   return {
-    board, boardContainer, placeToken, create, update,
+    board, boardContainer, placeToken, create, checkWinner, update,
   };
 };
 
@@ -61,6 +74,7 @@ const Game = (gameboard) => {
       gameboard.placeToken(event.target.dataset.index, tokenToPlace);
       update.innerText = `Player ${(roundNumber % 2) + 1}, make your selection.`;
       updateArea.appendChild(update);
+      gameboard.checkWinner();
     } else {
       update.innerText = `Whoops. Sorry Player ${(roundNumber % 2) + 1}. That slot is taken. Try again.`;
       updateArea.appendChild(update);
