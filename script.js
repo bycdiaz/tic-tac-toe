@@ -27,14 +27,45 @@ const Gameboard = () => {
   };
 
   const checkWinner = () => {
+    const isX = (symbol) => symbol === 'X';
+    const isO = (symbol) => symbol === 'O';
     // horizontal win
     const horizontalSlots = [board.slice(0, 3), board.slice(3, 6), board.slice(6, 9)];
-    const verticalSlots = [[board[0], board[3], board[6]], [board[1], board[4], board[7]], [board[2], board[5], board[8]]];
-    const diagonalSlots = [[board[0], board[4], board[8]], [board[2], board[4], board[6]]];
-    // horizontalSlots.forEach((slice) => {
-    //   const isSymbol = (symbol) => symbol === 'X' || symbol === 'O';
+    // const verticalSlots = [
+    //   [board[0], board[3], board[6]],
+    //   [board[1], board[4], board[7]],
+    //   [board[2], board[5], board[8]],
+    // ];
+    // const diagonalSlots = [[board[0], board[4], board[8]], [board[2], board[4], board[6]]];
+
+
+    horizontalSlots.forEach((slice) => {
+      if (slice.every(isX) || slice.every(isO)) {
+        console.log(slice);
+        // console.log(slice[0]);
+        return slice;
+      }
+    });
+
+    const checkVertical = () => {
+
+    };
+    const checkDiagonal = () => {
+
+    };
+    // verticalSlots.forEach((slice) => {
     //   if (slice.every(isSymbol)) {
     //     console.log(slice);
+    //     // console.log(slice[0]);
+    //     return slice;
+    //   }
+    // });
+
+    // diagonalSlots.forEach((slice) => {
+    //   if (slice.every(isSymbol)) {
+    //     console.log(slice);
+    //     // console.log(slice[0]);
+    //     return slice;
     //   }
     // });
   };
