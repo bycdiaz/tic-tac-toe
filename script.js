@@ -29,45 +29,52 @@ const Gameboard = () => {
   const checkWinner = () => {
     const isX = (symbol) => symbol === 'X';
     const isO = (symbol) => symbol === 'O';
-    // horizontal win
+
     const horizontalSlots = [board.slice(0, 3), board.slice(3, 6), board.slice(6, 9)];
-    // const verticalSlots = [
-    //   [board[0], board[3], board[6]],
-    //   [board[1], board[4], board[7]],
-    //   [board[2], board[5], board[8]],
-    // ];
-    // const diagonalSlots = [[board[0], board[4], board[8]], [board[2], board[4], board[6]]];
+    const verticalSlots = [
+      [board[0], board[3], board[6]],
+      [board[1], board[4], board[7]],
+      [board[2], board[5], board[8]],
+    ];
+    const diagonalSlots = [[board[0], board[4], board[8]], [board[2], board[4], board[6]]];
 
-
-    horizontalSlots.forEach((slice) => {
-      if (slice.every(isX) || slice.every(isO)) {
-        console.log(slice);
-        // console.log(slice[0]);
-        return slice;
-      }
-    });
-
-    const checkVertical = () => {
-
+    const horizontal = () => {
+      horizontalSlots.forEach((slice) => {
+        if (slice.every(isX) || slice.every(isO)) {
+          console.log(slice);
+          // console.log(slice[0]);
+          return slice;
+        }
+      });
     };
-    const checkDiagonal = () => {
 
+    const vertical = () => {
+      verticalSlots.forEach((slice) => {
+        if (slice.every(isX) || slice.every(isO)) {
+          console.log(slice);
+          // console.log(slice[0]);
+          return slice;
+        }
+      });
     };
-    // verticalSlots.forEach((slice) => {
-    //   if (slice.every(isSymbol)) {
-    //     console.log(slice);
-    //     // console.log(slice[0]);
-    //     return slice;
-    //   }
-    // });
 
-    // diagonalSlots.forEach((slice) => {
-    //   if (slice.every(isSymbol)) {
-    //     console.log(slice);
-    //     // console.log(slice[0]);
-    //     return slice;
-    //   }
-    // });
+    const diagonal = () => {
+      diagonalSlots.forEach((slice) => {
+        if (slice.every(isX) || slice.every(isO)) {
+          console.log(slice);
+          // console.log(slice[0]);
+          return slice;
+        }
+      });
+    };
+
+    horizontal();
+    vertical();
+    diagonal();
+
+    return {
+      horizontal, vertical, diagonal,
+    };
   };
 
   return {
