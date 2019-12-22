@@ -87,77 +87,73 @@ const Gameboard = () => {
   };
 };
 
-const player = (symbol) => {
+const player = (symbol, name) => {
   const playerSymbol = symbol;
-
-  const getNames = () => {
-    
-  };
-
-
-
+  const playerName = name;
   return {
     playerSymbol,
+    playerName,
   };
 };
 
 const Game = (gameboard) => {
   let roundNumber = 0;
-  const player1 = player('X');
-  const player2 = player('O');
+  const player1 = player('X', '');
+  const player2 = player('O', '');
+  player1.playerName = prompt('Player 1, please enter your name:');
+  player2.playerName = prompt('Player 2, please enter your name:');
   const players = [player1, player2];
-  const submitButton = document.querySelector('.submit');
-
-  function hideForm() {
-    const form = document.querySelector('.form');
-    if (form.style.display === 'none') {
-      form.style.display = 'block';
-    } else {
-      form.style.display = 'none';
-    }
-  }
-
-  submitButton.addEventListener('click', hideForm);
 
   const updateArea = document.querySelector('.update-area');
   updateArea.innerHTML = '';
-
   const update = document.createElement('p');
-  update.innerText = `Player ${(roundNumber % 2) + 1}, make your selection.`;
+  update.innerText = `${players[roundNumber % 2].playerName}, make your selection.`;
   updateArea.appendChild(update);
 
-  gameboard.create();
+  function reset() {
+    const resetButton = document.createElement('button');
+    resetButton.innerText = 'Reset';
+    updateArea.appendChild(resetButton);
 
+    resetButton.addEventListener('click', () => {
+      Game(Gameboard(), player);
+    });
+  }
+
+  gameboard.create();
   gameboard.boardContainer.addEventListener('click', function clickEvent(event) {
     const tokenToPlace = players[roundNumber % 2].playerSymbol;
 
     if (gameboard.board[event.target.dataset.index] === '') {
       roundNumber += 1;
       gameboard.placeToken(event.target.dataset.index, tokenToPlace);
-      update.innerText = `Player ${(roundNumber % 2) + 1}, make your selection.`;
+      update.innerText = `${players[roundNumber % 2].playerName}, make your selection.`;
       updateArea.appendChild(update);
       const winner = gameboard.checkWinner();
       if (winner === 1) {
         gameboard.boardContainer.removeEventListener('click', clickEvent);
         updateArea.innerHTML = '';
         const winnerUpdate = document.createElement('p');
-        winnerUpdate.innerText = 'Player 1 Wins!';
+        winnerUpdate.innerText = `${players[0].playerName} Wins!`;
         updateArea.appendChild(winnerUpdate);
+        reset();
       } else if (winner === -1) {
         gameboard.boardContainer.removeEventListener('click', clickEvent);
         updateArea.innerHTML = '';
         const winnerUpdate = document.createElement('p');
-        winnerUpdate.innerText = 'Player 2 Wins!';
+        winnerUpdate.innerText = `${players[1].playerName} Wins!`;
         updateArea.appendChild(winnerUpdate);
+        reset();
       } else if (winner === 0 && roundNumber === 9) {
         gameboard.boardContainer.removeEventListener('click', clickEvent);
         updateArea.innerHTML = '';
         const winnerUpdate = document.createElement('p');
         winnerUpdate.innerText = 'Draw!';
         updateArea.appendChild(winnerUpdate);
+        reset();
       }
     } else {
-      update.innerText = `Whoops. Sorry Player ${(roundNumber % 2) + 1}. That slot is taken. Try again.`;
+      update.innerText = `Whoops. Sorry ${players[roundNumber % 2].playerName}. That slot is taken. Try again.`;
       updateArea.appendChild(update);
     }
   });
