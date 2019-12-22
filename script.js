@@ -29,6 +29,7 @@ const Gameboard = () => {
   const checkWinner = () => {
     const isX = (symbol) => symbol === 'X';
     const isO = (symbol) => symbol === 'O';
+    let winner = 0;
 
     const horizontalSlots = [board.slice(0, 3), board.slice(3, 6), board.slice(6, 9)];
     const verticalSlots = [
@@ -41,9 +42,11 @@ const Gameboard = () => {
     const horizontal = () => {
       horizontalSlots.forEach((slice) => {
         if (slice.every(isX) || slice.every(isO)) {
-          console.log(slice);
-          // console.log(slice[0]);
-          return slice;
+          if (slice[0] === 'X') {
+            winner = 1;
+          } else {
+            winner = -1;
+          }
         }
       });
     };
@@ -51,9 +54,11 @@ const Gameboard = () => {
     const vertical = () => {
       verticalSlots.forEach((slice) => {
         if (slice.every(isX) || slice.every(isO)) {
-          console.log(slice);
-          // console.log(slice[0]);
-          return slice;
+          if (slice[0] === 'X') {
+            winner = 1;
+          } else {
+            winner = -1;
+          }
         }
       });
     };
@@ -61,9 +66,11 @@ const Gameboard = () => {
     const diagonal = () => {
       diagonalSlots.forEach((slice) => {
         if (slice.every(isX) || slice.every(isO)) {
-          console.log(slice);
-          // console.log(slice[0]);
-          return slice;
+          if (slice[0] === 'X') {
+            winner = 1;
+          } else {
+            winner = -1;
+          }
         }
       });
     };
@@ -72,9 +79,7 @@ const Gameboard = () => {
     vertical();
     diagonal();
 
-    return {
-      horizontal, vertical, diagonal,
-    };
+    return winner;
   };
 
   return {
@@ -112,34 +117,30 @@ const Game = (gameboard) => {
       gameboard.placeToken(event.target.dataset.index, tokenToPlace);
       update.innerText = `Player ${(roundNumber % 2) + 1}, make your selection.`;
       updateArea.appendChild(update);
-      gameboard.checkWinner();
+      const winner = gameboard.checkWinner();
+      if (winner === 1) {
+        updateArea.innerHTML = '';
+        const winnerUpdate = document.createElement('p');
+        winnerUpdate.innerText = 'Player 1 Wins!';
+        updateArea.appendChild(winnerUpdate);
+      } else if (winner === -1) {
+        updateArea.innerHTML = '';
+        const winnerUpdate = document.createElement('p');
+        winnerUpdate.innerText = 'Player 2 Wins!';
+        updateArea.appendChild(winnerUpdate);
+      } else if (winner === 0 && roundNumber === 9) {
+        updateArea.innerHTML = '';
+        const winnerUpdate = document.createElement('p');
+        winnerUpdate.innerText = 'Draw!';
+        updateArea.appendChild(winnerUpdate);
+      }
     } else {
       update.innerText = `Whoops. Sorry Player ${(roundNumber % 2) + 1}. That slot is taken. Try again.`;
       updateArea.appendChild(update);
     }
-    // console.log(`Round count is: ${roundNumber}`);
   });
 
   return { gameboard, player };
 };
 
-const newGame = Game(Gameboard(), player);
-
-// Inside Game
-// let roundNumber = 0;
-// let players = [Player1('X'), Player2('O')];
-// const board = Board(ticTacToeContainer); // To build the board inside of
-// ticTacToeContainer.addEventListener('click', (event) => {
-//   const tokenToPlace = players[roundNumber % 2].token;
-//   board.placeToken(event.target.value, tokenToPlace);
-//   const winner = board.checkWinner();
-//   if(winner === 1) {
-//     renderWinner({winner: player1, loser: player2});
-//   } else if (winner === -1) {
-//     renderWinner({winner: player2, loser: player1});
-//   } else if (winner === 0 && roundNumber === 9) {
-//     renderDraw(player1, player2);
-//   } else {
-//     render();
-//   }
-// });
+Game(Gameboard(), player);
