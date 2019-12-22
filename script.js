@@ -113,7 +113,6 @@ const Game = (gameboard) => {
     const tokenToPlace = players[roundNumber % 2].playerSymbol;
 
     if (gameboard.board[event.target.dataset.index] === '') {
-      
       roundNumber += 1;
       gameboard.placeToken(event.target.dataset.index, tokenToPlace);
       update.innerText = `Player ${(roundNumber % 2) + 1}, make your selection.`;
