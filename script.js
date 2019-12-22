@@ -109,26 +109,30 @@ const Game = (gameboard) => {
 
   gameboard.create();
 
-  gameboard.boardContainer.addEventListener('click', (event) => {
+  gameboard.boardContainer.addEventListener('click', function clickEvent(event) {
     const tokenToPlace = players[roundNumber % 2].playerSymbol;
 
     if (gameboard.board[event.target.dataset.index] === '') {
+      
       roundNumber += 1;
       gameboard.placeToken(event.target.dataset.index, tokenToPlace);
       update.innerText = `Player ${(roundNumber % 2) + 1}, make your selection.`;
       updateArea.appendChild(update);
       const winner = gameboard.checkWinner();
       if (winner === 1) {
+        gameboard.boardContainer.removeEventListener('click', clickEvent);
         updateArea.innerHTML = '';
         const winnerUpdate = document.createElement('p');
         winnerUpdate.innerText = 'Player 1 Wins!';
         updateArea.appendChild(winnerUpdate);
       } else if (winner === -1) {
+        gameboard.boardContainer.removeEventListener('click', clickEvent);
         updateArea.innerHTML = '';
         const winnerUpdate = document.createElement('p');
         winnerUpdate.innerText = 'Player 2 Wins!';
         updateArea.appendChild(winnerUpdate);
       } else if (winner === 0 && roundNumber === 9) {
+        gameboard.boardContainer.removeEventListener('click', clickEvent);
         updateArea.innerHTML = '';
         const winnerUpdate = document.createElement('p');
         winnerUpdate.innerText = 'Draw!';
