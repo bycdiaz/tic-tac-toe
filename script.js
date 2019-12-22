@@ -90,6 +90,12 @@ const Gameboard = () => {
 const player = (symbol) => {
   const playerSymbol = symbol;
 
+  const getNames = () => {
+    
+  };
+
+
+
   return {
     playerSymbol,
   };
@@ -100,9 +106,22 @@ const Game = (gameboard) => {
   const player1 = player('X');
   const player2 = player('O');
   const players = [player1, player2];
+  const submitButton = document.querySelector('.submit');
+
+  function hideForm() {
+    const form = document.querySelector('.form');
+    if (form.style.display === 'none') {
+      form.style.display = 'block';
+    } else {
+      form.style.display = 'none';
+    }
+  }
+
+  submitButton.addEventListener('click', hideForm);
 
   const updateArea = document.querySelector('.update-area');
   updateArea.innerHTML = '';
+
   const update = document.createElement('p');
   update.innerText = `Player ${(roundNumber % 2) + 1}, make your selection.`;
   updateArea.appendChild(update);
